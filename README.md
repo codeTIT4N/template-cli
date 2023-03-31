@@ -1,2 +1,6 @@
-# template-cli
-[UNDER DEVELOPMENT] A CLI App to create a new project easily with some starter code
+## template-cli
+
+A CLI App to create a new project easily with some starter code
+
+[UNDER DEVELOPMENT] 
+
