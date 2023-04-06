@@ -1,3 +1,9 @@
 [submodule "templates/vite-dapp"]
 	path = templates/vite-dapp
 	url = https://github.com/codeTIT4N/vite-dapp-example
+[submodule "templates/node-jwt-auth-js"]
+	path = templates/node-jwt-auth-js
+	url = https://github.com/codeTIT4N/node-jwt-auth-template
+[submodule "templates/node-jwt-auth-ts"]
+	path = templates/node-jwt-auth-ts
+	url = https://github.com/codeTIT4N/node-jwt-auth-template-ts
