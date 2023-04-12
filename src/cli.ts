@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import inquirer from "inquirer";
-import generateProject from "./generateProject.ts";
 import fs from "fs";
 import * as url from "url";
 const CURR_DIR = process.cwd();
@@ -35,6 +34,32 @@ export async function main() {
     fs.mkdirSync(`${CURR_DIR}/${projectName}`);
 
     generateProject(templatePath, projectName);
+  });
+}
+
+function generateProject(templatePath: string, newProjectPath: string) {
+  const filesToCreate = fs.readdirSync(templatePath);
+
+  filesToCreate.forEach((file) => {
+    const origFilePath = `${templatePath}/${file}`;
+
+    // get stats about the current file
+    const stats = fs.statSync(origFilePath);
+
+    if (stats.isFile()) {
+      const contents = fs.readFileSync(origFilePath, "utf8");
+
+      // Rename
+      if (file === ".npmignore") file = ".gitignore";
+
+      const writePath = `${CURR_DIR}/${newProjectPath}/${file}`;
+      fs.writeFileSync(writePath, contents, "utf8");
+    } else if (stats.isDirectory()) {
+      fs.mkdirSync(`${CURR_DIR}/${newProjectPath}/${file}`);
+
+      // recursive call
+      generateProject(`${templatePath}/${file}`, `${newProjectPath}/${file}`);
+    }
   });
 }
 
