@@ -15,7 +15,7 @@ git clone --recurse-submodules https://github.com/codeTIT4N/template-cli
 - Step 4: Install globally to use: `npm install -g`
 - Step 5: Now, anywhere in your machine you can use the `template-cli` command to setup new projects.
 
-### More commands:
+### More commands
 
 - Run application in dev mode: `npm run dev`
 
@@ -26,4 +26,9 @@ git clone --recurse-submodules https://github.com/codeTIT4N/template-cli
   > This will compile the TypeScript in the `src` folder and put the compiled JavaScript in the `dist` folder.
 
 - Run the compiled JavaScript: `npm start`
+
   > This will run the compiled JavaScript from the previous command.
+
+  ### Credits
+
+  This project is inspired by [@leoroese/template-cli](https://github.com/leoroese/template-cli)
