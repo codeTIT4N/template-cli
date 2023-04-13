@@ -10,6 +10,9 @@
     "start": "node dist/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "template-cli": "dist/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codeTIT4N/template-cli.git"
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/codeTIT4N/template-cli#readme",
   "devDependencies": {
+    "@babel/core": "^7.21.4",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.37.0",
