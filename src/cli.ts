@@ -2,6 +2,10 @@
 import inquirer from "inquirer";
 import fs from "fs";
 import * as url from "url";
+import util from "util";
+import { exec as importedExec } from "child_process";
+const exec = util.promisify(importedExec);
+
 const CURR_DIR = process.cwd();
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -52,7 +56,7 @@ function generateProject(templatePath: string, newProjectPath: string) {
       },
     },
   ];
-  inquirer.prompt(QUESTIONS).then((answers) => {
+  inquirer.prompt(QUESTIONS).then(async (answers) => {
     const projectChoice: string = answers["template"];
     const projectName: string = answers["projectName"];
     const templatePath = `${__dirname}/../templates/${projectChoice}`;
@@ -60,5 +64,7 @@ function generateProject(templatePath: string, newProjectPath: string) {
     fs.mkdirSync(`${CURR_DIR}/${projectName}`);
 
     generateProject(templatePath, projectName);
+
+    await exec(`cd ${projectName} && npm install`);
   });
 })();
