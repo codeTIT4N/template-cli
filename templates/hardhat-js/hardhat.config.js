@@ -32,6 +32,14 @@ module.exports = {
       url: `https://optimism-goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: [`0x${process.env.PVT_KEY}`],
     },
+    fantom_testnet: {
+      url: `https://rpc.testnet.fantom.network`, // https://chainlist.org
+      accounts: [`0x${process.env.PVT_KEY}`],
+    },
+    moonbase_alpha: {
+      url: `https://rpc.testnet.moonbeam.network`, // https://chainlist.org
+      accounts: [`0x${process.env.PVT_KEY}`],
+    },
   },
   solidity: {
     version: "0.8.18",
