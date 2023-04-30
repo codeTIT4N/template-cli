@@ -12,8 +12,9 @@ git clone --recurse-submodules https://github.com/codeTIT4N/template-cli
 
 - Step 2: Change directory: `cd template-cli`
 - Step 3: Install `node_modules`: `npm install`
-- Step 4: Install globally to use: `npm install -g`
-- Step 5: Now, anywhere in your machine you can use the `template-cli` command to setup new projects.
+- Step 4: Build the project: `npm run build`
+- Step 5: Install globally to use: `npm install -g`
+- Step 6: Now, anywhere in your machine you can use the `template-cli` command to setup new projects.
 
 ### More commands
 

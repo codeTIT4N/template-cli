@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx ts-node src/cli.ts",
-    "build": "tsc",
+    "build": "tsc && sed -i '' \"s/ts-node/node/\" dist/cli.js",
     "start": "node dist/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

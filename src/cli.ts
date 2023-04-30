@@ -5,6 +5,7 @@ import * as url from "url";
 import util from "util";
 import { exec as importedExec } from "child_process";
 const exec = util.promisify(importedExec);
+//import spawn from "child_process";
 
 const CURR_DIR = process.cwd();
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -57,6 +58,8 @@ function generateProject(templatePath: string, newProjectPath: string) {
     },
   ];
   inquirer.prompt(QUESTIONS).then(async (answers) => {
+    console.log("Creating project Please wait...");
+
     const projectChoice: string = answers["template"];
     const projectName: string = answers["projectName"];
     const templatePath = `${__dirname}/../templates/${projectChoice}`;
@@ -66,5 +69,7 @@ function generateProject(templatePath: string, newProjectPath: string) {
     generateProject(templatePath, projectName);
 
     await exec(`cd ${projectName} && npm install`);
+
+    console.log("Done!");
   });
 })();
