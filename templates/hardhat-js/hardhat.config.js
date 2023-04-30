@@ -51,9 +51,12 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API,
-    // apiKey: process.env.POLYGONSCAN_API
-    // apiKey: process.env.ARBISCAN_API
-    // apiKey: process.env.SNOWTRACE_API
+    apiKey: process.env.ETHERSCAN_API_KEY,
+    // apiKey: process.env.POLYGONSCAN_API_KEY
+    // apiKey: process.env.SNOWTRACE_API_KEY
+    // apiKey: process.env.ARBISCAN_API_KEY
+    // apiKey: process.env.OPTIMISM_ETHERSCAN_API_KEY
+    // apiKey: process.env.FTMSCAN_API_KEY
+    // apiKey: process.env.MOONSCAN_API_KEY
   },
 };
