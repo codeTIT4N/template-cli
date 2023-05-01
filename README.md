@@ -30,6 +30,6 @@ git clone --recurse-submodules https://github.com/codeTIT4N/template-cli
 
   > This will run the compiled JavaScript from the previous command.
 
-  ### Credits
+### Credits
 
-  This project is inspired by [@leoroese/template-cli](https://github.com/leoroese/template-cli)
+This project is inspired by [@leoroese/template-cli](https://github.com/leoroese/template-cli)

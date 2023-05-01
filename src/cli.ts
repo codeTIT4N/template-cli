@@ -5,7 +5,6 @@ import * as url from "url";
 import util from "util";
 import { exec as importedExec } from "child_process";
 const exec = util.promisify(importedExec);
-//import spawn from "child_process";
 
 const CURR_DIR = process.cwd();
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
