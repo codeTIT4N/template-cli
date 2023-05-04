@@ -51,12 +51,15 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-    // apiKey: process.env.POLYGONSCAN_API_KEY
-    // apiKey: process.env.SNOWTRACE_API_KEY
-    // apiKey: process.env.ARBISCAN_API_KEY
-    // apiKey: process.env.OPTIMISM_ETHERSCAN_API_KEY
-    // apiKey: process.env.FTMSCAN_API_KEY
-    // apiKey: process.env.MOONSCAN_API_KEY
+    apiKey: {
+      goerli: process.env.ETHERSCAN_API_KEY,
+      sepolia: process.env.ETHERSCAN_API_KEY,
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY,
+      avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY,
+      arbitrumGoerli: process.env.ARBISCAN_API_KEY,
+      optimisticGoerli: process.env.OPTIMISM_ETHERSCAN_API_KEY,
+      ftmTestnet: process.env.FTMSCAN_API_KEY,
+      moonbaseAlpha: process.env.MOONSCAN_API_KEY,
+    },
   },
 };

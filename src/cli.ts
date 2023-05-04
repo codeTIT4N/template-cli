@@ -67,7 +67,9 @@ function generateProject(templatePath: string, newProjectPath: string) {
 
     generateProject(templatePath, projectName);
 
-    await exec(`cd ${projectName} && npm install`);
+    await exec(
+      `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
+    );
 
     console.log("Done!");
   });

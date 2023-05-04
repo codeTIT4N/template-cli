@@ -3,7 +3,7 @@ const hre = require("hardhat");
 async function main() {
   const MyToken = await hre.ethers.getContractFactory("MyToken");
   const contract = await MyToken.deploy();
-  await contract.deployTransaction.wait(4); //wait for 4 confimations
+  await contract.deployTransaction.wait(6); //wait for 6 confimations
 
   console.log(`MyToken deployed to: ${contract.address}`);
 
