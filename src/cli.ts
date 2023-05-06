@@ -19,13 +19,13 @@ function generateProject(templatePath: string, newProjectPath: string) {
     const stats = fs.statSync(origFilePath);
 
     if (stats.isFile()) {
-      const contents = fs.readFileSync(origFilePath, "utf8");
+      const contents = fs.readFileSync(origFilePath);
 
       // Rename
       if (file === ".npmignore") file = ".gitignore";
 
       const writePath = `${CURR_DIR}/${newProjectPath}/${file}`;
-      fs.writeFileSync(writePath, contents, "utf8");
+      fs.writeFileSync(writePath, contents);
     } else if (stats.isDirectory()) {
       fs.mkdirSync(`${CURR_DIR}/${newProjectPath}/${file}`);
 
