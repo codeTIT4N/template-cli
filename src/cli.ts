@@ -36,7 +36,12 @@ function generateProject(templatePath: string, newProjectPath: string) {
 }
 
 (() => {
-  const CHOICES = fs.readdirSync(__dirname + "../templates");
+  const CHOICES = fs
+    .readdirSync(__dirname + "../templates", {
+      withFileTypes: true,
+    })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
   const QUESTIONS = [
     {
