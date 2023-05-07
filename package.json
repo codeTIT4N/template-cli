@@ -8,6 +8,7 @@
     "dev": "npx ts-node src/cli.ts",
     "build": "tsc && sed -i '' \"s/ts-node/node/\" dist/cli.js",
     "start": "node dist/cli.js",
+    "reinstall": "npm run build && npm uninstall -g template-cli && npm install -g",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {

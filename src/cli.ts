@@ -3,6 +3,7 @@ import inquirer from "inquirer";
 import fs from "fs";
 import * as url from "url";
 import util from "util";
+import path from "path";
 import { exec as importedExec } from "child_process";
 const exec = util.promisify(importedExec);
 
@@ -20,17 +21,21 @@ function generateProject(templatePath: string, newProjectPath: string) {
 
     if (stats.isFile()) {
       const contents = fs.readFileSync(origFilePath);
-
       // Rename
       if (file === ".npmignore") file = ".gitignore";
-
-      const writePath = `${CURR_DIR}/${newProjectPath}/${file}`;
+      let writePath = `${CURR_DIR}/${newProjectPath}/${file}`;
+      if (newProjectPath === ".") writePath = `${CURR_DIR}/${file}`;
       fs.writeFileSync(writePath, contents);
     } else if (stats.isDirectory()) {
-      fs.mkdirSync(`${CURR_DIR}/${newProjectPath}/${file}`);
-
-      // recursive call
-      generateProject(`${templatePath}/${file}`, `${newProjectPath}/${file}`);
+      if (newProjectPath === ".") {
+        fs.mkdirSync(`${CURR_DIR}/${file}`);
+        // recursive call
+        generateProject(`${templatePath}/${file}`, `${file}`);
+      } else {
+        fs.mkdirSync(`${CURR_DIR}/${newProjectPath}/${file}`);
+        // recursive call
+        generateProject(`${templatePath}/${file}`, `${newProjectPath}/${file}`);
+      }
     }
   });
 }
@@ -53,11 +58,21 @@ function generateProject(templatePath: string, newProjectPath: string) {
     {
       name: "projectName",
       type: "input",
-      message: "Project name:",
+      message: "Project name? (Enter . to use current directory):",
       validate: function (input: string) {
-        if (/^([A-Za-z\-\\_\d])+$/.test(input)) return true;
+        if (
+          input === "." &&
+          /^(?!-)[A-Za-z\-\\_\d]*(?<!-)$/.test(path.basename(CURR_DIR))
+        ) {
+          if (fs.readdirSync(CURR_DIR).length === 0) {
+            return true;
+          } else {
+            return "Directory is not empty!";
+          }
+        } else if (input !== "." && /^(?!-)[A-Za-z\-\\_\d]*(?<!-)$/.test(input))
+          return true;
         else
-          return "Project name may only include letters, numbers, underscores and hashes.";
+          return "Invalid Project Name! It may only include letters, numbers, underscores and hashes.";
       },
     },
   ];
@@ -68,13 +83,18 @@ function generateProject(templatePath: string, newProjectPath: string) {
     const projectName: string = answers["projectName"];
     const templatePath = `${__dirname}/../templates/${projectChoice}`;
 
-    fs.mkdirSync(`${CURR_DIR}/${projectName}`);
-
-    generateProject(templatePath, projectName);
-
-    await exec(
-      `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
-    );
+    if (projectName !== ".") {
+      fs.mkdirSync(`${CURR_DIR}/${projectName}`);
+      generateProject(templatePath, projectName);
+      await exec(
+        `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
+      );
+    } else {
+      generateProject(templatePath, projectName);
+      await exec(
+        `npm install && rm -rf .git && git init && git branch -M main`
+      );
+    }
 
     console.log("Done!");
   });

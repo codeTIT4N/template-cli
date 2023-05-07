@@ -2,6 +2,8 @@
 
 A CLI App to create a new project easily with some starter code
 
+> Works best with UNIX based systems.
+
 ### Steps to install and use
 
 - Step 1: Clone the repo with all the submodules:
