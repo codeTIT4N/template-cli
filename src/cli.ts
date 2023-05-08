@@ -75,25 +75,45 @@ function generateProject(templatePath: string, newProjectPath: string) {
           return "Invalid Project Name! It may only include letters, numbers, underscores and hashes.";
       },
     },
+    {
+      name: "gitRemote",
+      type: "input",
+      message: "Git remote url? (Keep empty to skip):",
+    },
   ];
   inquirer.prompt(QUESTIONS).then(async (answers) => {
     console.log("Creating project Please wait...");
 
     const projectChoice: string = answers["template"];
     const projectName: string = answers["projectName"];
+    const gitRemote: string = answers["gitRemote"];
     const templatePath = `${__dirname}/../templates/${projectChoice}`;
 
     if (projectName !== ".") {
       fs.mkdirSync(`${CURR_DIR}/${projectName}`);
       generateProject(templatePath, projectName);
-      await exec(
-        `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
-      );
+
+      if (gitRemote !== "") {
+        await exec(
+          `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+        );
+      } else {
+        await exec(
+          `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
+        );
+      }
     } else {
       generateProject(templatePath, projectName);
-      await exec(
-        `npm install && rm -rf .git && git init && git branch -M main`
-      );
+
+      if (gitRemote !== "") {
+        await exec(
+          `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+        );
+      } else {
+        await exec(
+          `npm install && rm -rf .git && git init && git branch -M main`
+        );
+      }
     }
 
     console.log("Done!");
