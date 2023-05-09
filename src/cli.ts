@@ -69,7 +69,11 @@ function generateProject(templatePath: string, newProjectPath: string) {
           } else {
             return "Directory is not empty!";
           }
-        } else if (input !== "." && /^(?!-)[A-Za-z\-\\_\d]*(?<!-)$/.test(input))
+        } else if (
+          input !== "" &&
+          input !== "." &&
+          /^(?!-)[A-Za-z\-\\_\d]*(?<!-)$/.test(input)
+        )
           return true;
         else
           return "Invalid Project Name! It may only include letters, numbers, underscores and hashes.";
