@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx ts-node src/cli.ts",
-    "build": "tsc && sed -i '' \"s/ts-node/node/\" dist/cli.js",
+    "build": "tsc && babel dist --out-dir dist --extensions \".js\" && sed -i '' \"s/ts-node/node/\" dist/cli.js",
     "start": "node dist/cli.js",
     "setup": "npm run build && npm uninstall -g template-cli && npm install -g",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/codeTIT4N/template-cli#readme",
   "devDependencies": {
-    "@babel/core": "^7.21.4",
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.37.0",
