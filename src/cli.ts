@@ -6,6 +6,7 @@ import util from "util";
 import path from "path";
 import { exec as importedExec } from "child_process";
 const exec = util.promisify(importedExec);
+import ora from "ora";
 
 const CURR_DIR = process.cwd();
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -73,9 +74,10 @@ function generateProject(templatePath: string, newProjectPath: string) {
           input !== "" &&
           input !== "." &&
           /^(?!-)[A-Za-z\-\\_\d]*(?<!-)$/.test(input)
-        )
-          return true;
-        else
+        ) {
+          if (!fs.existsSync(`${CURR_DIR}/${input}`)) return true;
+          else return "Directory already exists!";
+        } else
           return "Invalid Project Name! It may only include letters, numbers, underscores and hashes.";
       },
     },
@@ -86,40 +88,43 @@ function generateProject(templatePath: string, newProjectPath: string) {
     },
   ];
   inquirer.prompt(QUESTIONS).then(async (answers) => {
-    console.log("Creating project Please wait...");
+    const spinner = ora("Creating project Please wait...").start();
+    try {
+      const projectChoice: string = answers["template"];
+      const projectName: string = answers["projectName"];
+      const gitRemote: string = answers["gitRemote"];
+      const templatePath = `${__dirname}/../templates/${projectChoice}`;
 
-    const projectChoice: string = answers["template"];
-    const projectName: string = answers["projectName"];
-    const gitRemote: string = answers["gitRemote"];
-    const templatePath = `${__dirname}/../templates/${projectChoice}`;
-
-    if (projectName !== ".") {
-      fs.mkdirSync(`${CURR_DIR}/${projectName}`);
-      generateProject(templatePath, projectName);
-
-      if (gitRemote !== "") {
-        await exec(
-          `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
-        );
+      if (projectName !== ".") {
+        fs.mkdirSync(`${CURR_DIR}/${projectName}`);
+        generateProject(templatePath, projectName);
+        if (gitRemote !== "") {
+          await exec(
+            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+          );
+        } else {
+          await exec(
+            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
+          );
+        }
       } else {
-        await exec(
-          `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
-        );
+        generateProject(templatePath, projectName);
+        if (gitRemote !== "") {
+          await exec(
+            `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+          );
+        } else {
+          await exec(
+            `npm install && rm -rf .git && git init && git branch -M main`
+          );
+        }
       }
-    } else {
-      generateProject(templatePath, projectName);
-
-      if (gitRemote !== "") {
-        await exec(
-          `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
-        );
-      } else {
-        await exec(
-          `npm install && rm -rf .git && git init && git branch -M main`
-        );
-      }
+      ora("Project created successfully!").succeed();
+      spinner.stop();
+    } catch (e) {
+      spinner.stop();
+      ora("Error creating project!").fail();
+      console.log("Error:", e);
     }
-
-    console.log("Done!");
   });
 })();
