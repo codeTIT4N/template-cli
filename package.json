@@ -35,7 +35,6 @@
   "dependencies": {
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.15.11",
-    "ethers": "^6.3.0",
     "inquirer": "^9.1.5",
     "ora": "^6.3.0",
     "ts-node": "10.9.1"
