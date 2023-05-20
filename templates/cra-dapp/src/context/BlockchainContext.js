@@ -1,18 +1,18 @@
-const { createContext, useEffect, useState } = require("react");
 import { ethers } from "ethers";
+const { createContext, useEffect, useState } = require("react");
 
 export const BlockChainContext = createContext();
 export function BlockChainContextProvider({ children }) {
   const [walletAddress, setAddress] = useState(undefined);
   const [provider, setProvider] = useState(null);
-  const [chainId, setChainId] = useState();
+  const [chainId, setChainId] = useState(null);
 
   useEffect(() => {
     loadWeb3();
   }, []);
 
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum != null) {
       window.ethereum.on("chainChanged", async function () {
         window.location.reload();
       });
@@ -20,7 +20,7 @@ export function BlockChainContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum != null) {
       window.ethereum.on("accountsChanged", async function () {
         window.location.reload();
       });
@@ -40,10 +40,10 @@ export function BlockChainContextProvider({ children }) {
       }
     } catch (err) {
       console.log(err);
-      alert(err.message);
     }
   };
-  const connect = async (e) => {
+
+  async function connect(e) {
     e.preventDefault();
     window.ethereum
       ? window.ethereum
@@ -58,13 +58,15 @@ export function BlockChainContextProvider({ children }) {
               //toast.error("Please Connect Metamask!");
             } else {
               console.error(error);
-              toast.error(error.message);
+              alert(error.message);
             }
           })
       : alert("Please install a web3 wallet like MetaMask!");
-  };
+  }
   return (
-    <BlockChainContext.Provider value={{ connect, walletAddress, provider }}>
+    <BlockChainContext.Provider
+      value={{ connect, walletAddress, provider, chainId }}
+    >
       {children}
     </BlockChainContext.Provider>
   );
