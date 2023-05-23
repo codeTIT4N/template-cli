@@ -10,14 +10,20 @@ function NavBar() {
         <Navbar.Brand href="/">CRA dApp</Navbar.Brand>
         {walletAddress ? (
           <Navbar.Text>
-            <span style={{ color: "wheat" }}>{walletAddress}</span>
+            <span
+              style={{
+                color: "coral",
+                fontFamily: "sans-serif",
+              }}
+            >
+              {walletAddress}
+            </span>
           </Navbar.Text>
         ) : (
           <Button variant="outline-info" onClick={connect}>
             Connect Wallet
           </Button>
         )}
-        // <span style={{ color: "wheat" }}></span>
       </Container>
     </Navbar>
   );
