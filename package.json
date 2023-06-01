@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx ts-node src/cli.ts",
-    "build": "tsc && babel dist --out-dir dist --extensions \".js\" && sed -i '' \"s/ts-node/node/\" dist/cli.js",
+    "build": "tsc && babel dist --out-dir dist --extensions \".js\" && sed 's/ts-node/node/g' dist/cli.js > dist/tmp.js && rm -rf dist/cli.js && mv dist/tmp.js dist/cli.js",
     "start": "node dist/cli.js",
     "setup": "npm run build && npm uninstall -g template-cli && npm install -g",
     "test": "echo \"Error: no test specified\" && exit 1"
