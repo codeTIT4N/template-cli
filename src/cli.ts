@@ -100,22 +100,22 @@ function generateProject(templatePath: string, newProjectPath: string) {
         generateProject(templatePath, projectName);
         if (gitRemote !== "") {
           await exec(
-            `cd ${projectName} && npm install && rm -rf .git && git init && git add . && git commit -m "template init" && git branch -M main && git remote add origin ${gitRemote}`
+            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
           );
         } else {
           await exec(
-            `cd ${projectName} && npm install && rm -rf .git && git init && git add . && git commit -m "template init" && git branch -M main`
+            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
           );
         }
       } else {
         generateProject(templatePath, projectName);
         if (gitRemote !== "") {
           await exec(
-            `npm install && rm -rf .git && git init && git add . && git commit -m "template init" && git branch -M main && git remote add origin ${gitRemote}`
+            `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
           );
         } else {
           await exec(
-            `npm install && rm -rf .git && git init && git add . && git commit -m "template init" && git branch -M main`
+            `npm install && rm -rf .git && git init && git branch -M main`
           );
         }
       }
