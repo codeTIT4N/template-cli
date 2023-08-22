@@ -15,6 +15,9 @@ function generateProject(templatePath: string, newProjectPath: string) {
   const filesToCreate = fs.readdirSync(templatePath);
 
   filesToCreate.forEach((file) => {
+    if (file == "node_modules") {
+      return;
+    }
     const origFilePath = `${templatePath}/${file}`;
 
     // get stats about the current file
@@ -100,23 +103,19 @@ function generateProject(templatePath: string, newProjectPath: string) {
         generateProject(templatePath, projectName);
         if (gitRemote !== "") {
           await exec(
-            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`,
           );
         } else {
-          await exec(
-            `cd ${projectName} && npm install && rm -rf .git && git init && git branch -M main`
-          );
+          await exec(`cd ${projectName} && npm install && rm -rf .git`);
         }
       } else {
         generateProject(templatePath, projectName);
         if (gitRemote !== "") {
           await exec(
-            `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`
+            `npm install && rm -rf .git && git init && git branch -M main && git remote add origin ${gitRemote}`,
           );
         } else {
-          await exec(
-            `npm install && rm -rf .git && git init && git branch -M main`
-          );
+          await exec(`npm install && rm -rf .git`);
         }
       }
       ora("Project created successfully!").succeed();
